@@ -47,5 +47,30 @@ public class NeuralNetwork{
             weights = PerformOperation(weights,adjustement,OPERATION.Add);
         }
     }
+    private double[,] DotProduct(double[,] matrix1, double[,] matrix2){
+        int numberOfRowsInMatrix1 = matrix1.GetLength(0);
+        int numberOfColumnsInMatrix1 = matrix1.GetLength(1);
+
+        int numberOfRowsInMatrix2 = matrix2.GetLength(0);
+        int numberOfColumnsInMatrix2 = matrix2.GetLength(1);
+
+        double[,] result = new double[numberOfColumnsInMatrix1, numberOfColumnsInMatrix2];
+        for(int rowInMatrix1= 0; rowInMatrix1 < numberOfRowsInMatrix1; rowInMatrix1++){
+            for(int columnInMatrix2 = 0; columnInMatrix2 < numberOfColumnsInMatrix2;columnInMatrix2++){
+                double sum = 0;
+                for(int columnInMatrix1 = 0; columnInMatrix1 < numberOfColumnsInMatrix1; columnInMatrix1++){
+                    sum += matrix1[rowInMatrix1,columnInMatrix1] * matrix2[columnInMatrix1,columnInMatrix2];
+                
+               
+                }
+                result[rowInMatrix1,columnInMatrix2] = sum;
+            }
+        }
+        return result;
+     }
+
+     public double[,] Think(double[,] inputs){
+        return Activate(DotProduct(inputs, weights), false);
+     }
 }  
 
